@@ -32,9 +32,24 @@ public class Worker extends Person
         }
     }
 
-    public void displayWeeklyPay(double hoursWorked)
-    {
+    public void displayWeeklyPay(double hoursWorked) {
+        double regPay;
+        double otPay = 0;
+        double totalPay;
 
+        if (hoursWorked > 40) {
+            regPay = 40 * hourlyPayRate;
+            otPay = (hoursWorked - 40) * hourlyPayRate * 1.5;
+        } else {
+            regPay = hoursWorked * hourlyPayRate;
+        }
+        totalPay = regPay + otPay;
+
+        System.out.println("Number of regular hours: " + (hoursWorked > 40 ? 40 : hoursWorked));
+        System.out.println("Total regular pay: " + regPay);
+        System.out.println("Number of overtime hours: " + (hoursWorked > 40 ? (hoursWorked - 40) : 0));
+        System.out.println("Total overtime pay: " + otPay);
+        System.out.println("Total combined pay: " + totalPay);
     }
 
     @Override
