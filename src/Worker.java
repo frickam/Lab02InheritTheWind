@@ -18,22 +18,23 @@ public class Worker extends Person
         this.hourlyPayRate = hourlyPayRate;
     }
 
-    public double calculateWeeklyPay(double hoursWorked)
-    {
-        if (hoursWorked >= 40)
-        {
-            double otPay = 0;
-            (hoursWorked - 40) * hourlyPayRate * 1.5 = otPay;
-            double regPay = 0;
-            40 * hourlyPayRate = regPay;
+    public double calculateWeeklyPay(double hoursWorked) {
+        if (hoursWorked >= 40) {
+            double otPay = (hoursWorked - 40) * hourlyPayRate * 1.5;
+            double regPay = 40 * hourlyPayRate;
             double total = otPay + regPay;
-            return "Overtime pay is: " + otPay + " Regular pay is: " + regPay" Total pay is: " + total;
-        }
-        else
-        {
+            System.out.println("Overtime pay is: " + otPay + " Regular pay is: " + regPay + " Total pay is: " + total);
+            return total;
+        } else {
             double total = hourlyPayRate * hoursWorked;
-            return "Total weekly pay is: " + total;
+            System.out.println("Total weekly pay is: " + total);
+            return total;
         }
+    }
+
+    public void displayWeeklyPay(double hoursWorked)
+    {
+
     }
 
     @Override
