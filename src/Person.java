@@ -1,56 +1,30 @@
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Person
 {
-    private String IDNum;
-    private String firstName;
-    private String lastName;
-    private int YOB;
-    static private int IDSeed =  1;
 
-    public static void setIDSeed(int IDSeed) {
-        Person.IDSeed = IDSeed;
-    }
+    private String ID = "";
+    private String firstName = "";
+    private String lastName = "";
+    private String title = "";
+    private int YOB = 0;
 
-    public static int getIDSeed() {
-        return IDSeed;
-    }
-
-    public Person(String IDNum, String firstName, String lastName, int YOB)
-    {
-        this.IDNum = IDNum;
+    public Person(String ID, String firstName, String lastName, String title, int YOB) {
+        this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.title = title;
         this.YOB = YOB;
     }
 
-    public Person(String firstName, String lastName, int YOB)
-    {
-        this.IDNum = this.genIDNum();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.YOB = YOB;
+    public String getID() {
+        return ID;
     }
 
-
-    public String getIDNum() {
-        return IDNum;
-    }
-
-    private String genIDNum() {
-        String newID = "" + IDSeed;
-        while(newID.length() < 8)
-        {
-            newID = "0" + newID;
-        }
-
-        IDSeed++;
-
-        return newID;
-    }
-
-    public void setIDNum(String IDNum) {
-        this.IDNum = IDNum;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getFirstName() {
@@ -69,6 +43,15 @@ public class Person
         this.lastName = lastName;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
     public int getYOB() {
         return YOB;
     }
@@ -77,48 +60,70 @@ public class Person
         this.YOB = YOB;
     }
 
+    public String getFullName()
+    {
+        return this.getFirstName() + " " + this.getLastName();
+    }
+
+    public String getFormalName()
+    {
+        return title + " " + getFullName();
+    }
+
+    public String getAge()
+    {
+        int currentYear = LocalDate.now().getYear();
+        return this.getFullName() + " is " + String.valueOf(currentYear - YOB) + " Years Old.";
+    }
+
+    public String getAge(int year)
+    {
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        if (year > currentYear)
+        {
+            return "The specified year is in the future";
+        }
+
+        return "In " + year + " " + this.getFullName() + " was " + String.valueOf(year - YOB) + " Years Old.";
+    }
+
+    public String toCSV()
+    {
+        return ID + ", " + firstName + ", " + lastName + ", " + title + ", " + YOB;
+    }
+
+    public String toJSON()
+    {
+        return "{ \"ID\": \"" + ID + "\", \"firstName\": \"" + firstName + "\", \"lastName\": \"" + lastName + "\", \"title\": \"" + title + "\", \"YOB\": " + YOB + " }";
+    }
+
+    public String toXML()
+    {
+        return "<Person ID=\"" + ID + "\" firstName=\"" + firstName + "\" lastName=\"" + lastName + "\" title=\"" + title + "\" YOB=\"" + YOB + "\" />";
+    }
+
     @Override
     public String toString() {
         return "Person{" +
-                "IDNum='" + IDNum + '\'' +
+                "ID='" + ID + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", title='" + title + '\'' +
                 ", YOB=" + YOB +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return YOB == person.YOB && IDNum.equals(person.IDNum) && firstName.equals(person.firstName) && lastName.equals(person.lastName);
+        return YOB == person.YOB && Objects.equals(ID, person.ID) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(title, person.title);
     }
 
-    public String toJSONRecord()
-    {
-        String retString = "";
-        char DQ = '\u0022';  // Assign the double quote char to a variable
-        retString =  "{" + DQ + "IDNum" + DQ + ":" + DQ + this.IDNum + DQ + ",";
-        retString += DQ + "firstName" + DQ + ":" + DQ + this.firstName + DQ + ",";
-        retString += " " + DQ + "lastName"  + DQ + ":" + DQ + this.lastName + DQ + ",";
-        retString += " " + DQ + "YOB"  + DQ + ":" + this.YOB + "}";
-
-        return retString;
-    }
-
-    public String toXMLRecord()
-    {
-        String retString = "";
-
-        retString = "<Person>" + "<IDNum>" + this.IDNum + "</IDNum>";
-        retString += "<firstName>" + this.firstName + "</firstName>";
-        retString += "<lastName>" + this.lastName + "</lastName>";
-        retString += "<YOB>" + this.YOB + "</YOB></Person>";
-
-        return retString;
-    }
-    public String toCSVRecord() {
-        return  this.IDNum + ", " + this.firstName + "," + this.lastName + "," + YOB;
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID, firstName, lastName, title, YOB);
     }
 }
