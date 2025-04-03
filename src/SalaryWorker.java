@@ -18,7 +18,19 @@ public class SalaryWorker extends Worker
         this.annualSalary = annualSalary;
     }
 
+    @Override
+    public double calculateWeeklyPay(double hoursWorked)
+    {
+        return annualSalary / 52;
+    }
 
+    @Override
+    public void displayWeeklyPay(double hoursWorked)
+    {
+        double weeklyPay = calculateWeeklyPay(hoursWorked);
+        System.out.println("The weekly pay is a fraction of the yearly salary.");
+        System.out.println("Weekly pay: " + weeklyPay);
+    }
 
     @Override
     public String toCSV()
