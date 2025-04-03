@@ -2,7 +2,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        PiggyBank aaronBank = new PiggyBank(500.00);
+       /* PiggyBank aaronBank = new PiggyBank(500.00);
         SmartPiggyBank sallyBank = new SmartPiggyBank(100.0, .50);
 
         System.out.println("Aaron has " + aaronBank.getBalance());
@@ -13,7 +13,7 @@ public class Main
 
         aaronBank.stash(200);
         sallyBank.stash(100);
-
+                            */
 
 
     }
