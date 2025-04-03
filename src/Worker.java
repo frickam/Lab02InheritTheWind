@@ -53,6 +53,24 @@ public class Worker extends Person
     }
 
     @Override
+    public String toCSV()
+    {
+        return super.toCSV() + ", " + hourlyPayRate;
+    }
+
+    @Override
+    public String toJSON()
+    {
+        return super.toJSON() + "\", \"hourlyPayRate\": " + hourlyPayRate + " }";
+    }
+
+    @Override
+    public String toXML()
+    {
+        return super.toXML() + "\" hourlyPayRate=\"" + hourlyPayRate + "\" />";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
